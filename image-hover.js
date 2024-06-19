@@ -12,11 +12,17 @@ let imageHoverDelay = 0; // Hover time requirement (milliseconds)
 let DEFAULT_TOKEN = "icons/svg/mystery-man.svg"; // default token for foundry vtt
 let showSpecificArt = false; // track when to show/hide art when GM uses keybind to show art.
 let showArtTimer = 6000; // Time (milliseconds) spent showing art when GM decides to "showSpecificArt" to everyone.
+// let actorImages = {
+//   image1:"pasted_images/pasted_image_1676355142831-black.png",
+//   image2:"pasted_images/img300-black.jpg",
+//   image3:"pasted_images/pasted_image_1676355142831-black.png",
+//   image4:"pasted_images/pasted_image_1676355142831-black.png"
+// }
 let actorImages = {
-  image1:"pasted_images/pasted_image_1676355142831-black.png",
-  image2:"pasted_images/img300-black.jpg",
-  image3:"pasted_images/pasted_image_1676355142831-black.png",
-  image4:"pasted_images/pasted_image_1676355142831-black.png"
+  image1:"",
+  image2:"",
+  image3:"",
+  image4:""
 }
 let chatPortraitActive = false; // chat portrait incompatibility check
 
@@ -113,9 +119,9 @@ class ImageHoverHUD extends BasePlaceableHUD {
     let borderColor = Color.from(tokenObject.document.getFlag('discord-speaking-status', 'BorderColor'))
     if (!borderColor || isNaN(borderColor)) {
       if(actorId=='gfHJopk6ZVSUfKJr')
-        actorImages.image1="pasted_images/pasted_image_1676355142831-black.png"
+        actorImages.image1=""
       if(actorId=='4KLVoH44BSr1FyYu')
-        actorImages.image2="pasted_images/img300-black.jpg"
+        actorImages.image2=""
     }else{
       if(actorId=='gfHJopk6ZVSUfKJr')
         actorImages.image1="pasted_images/pasted_image_1676355142831.png"
@@ -168,11 +174,12 @@ class ImageHoverHUD extends BasePlaceableHUD {
       (imageHoverArt === "wildcard" && isWildcard) ||
       (imageHoverArt == "linked" && !isLinkedActor)
     ) {
+      console.log('no Art ddddd')
       // If no character art exists, use token art instead.
-      if (this.object.document.texture.src == DEFAULT_TOKEN) {
-        return;
-      }
-      url = this.object.document.texture.src; // Token art
+      // if (this.object.document.texture.src == DEFAULT_TOKEN) {
+      //   return;
+      // }
+      // url = this.object.document.texture.src; // Token art
     }
 
     /**
@@ -183,9 +190,10 @@ class ImageHoverHUD extends BasePlaceableHUD {
       "specificArt"
     );
     if (specificArtSelected && specificArtSelected != "path/image.png") {
+      
       url = specificArtSelected;
     }
-
+    
     if (url in cacheImageNames) {
       this.applyToCanvas(url);
     } else {
@@ -252,12 +260,17 @@ class ImageHoverHUD extends BasePlaceableHUD {
    * @param {String} url Url of the image/video to get dimensions from.
    */
   applyToCanvas(url) {
-    const imageWidth = cacheImageNames[url].width; //width of original image
-    const imageHeight = cacheImageNames[url].height; //height of original image
+    // const imageWidth = cacheImageNames[url].width; //width of original image
+    // const imageHeight = cacheImageNames[url].height; //height of original image
+    
+    const imageWidth = 1600; //width of original image
+    const imageHeight = 3000; //height of original image
     const [xAxis, yAxis, imageWidthScaled] = this.changePosition(
       imageWidth,
       imageHeight
     ); // move image to correct verticle position.
+    console.log('xAxis',xAxis)
+    console.log('yAxis',yAxis)
     const position = {
       // CSS
       width: imageWidthScaled,
@@ -285,18 +298,24 @@ class ImageHoverHUD extends BasePlaceableHUD {
 
     if (imageHeightScaled > windowHeightScaled) {
       // Height of image bigger than window height
+      console.log('aaaaaaaaa')
       imageWidthScaled =
         (windowHeightScaled / imageHeightScaled) * imageWidthScaled;
       imageHeightScaled = windowHeightScaled;
     }
 
     if (imagePositionSetting.includes("Bottom")) {
+      console.log('b11111111')
       // move image to bottom of canvas
       yAxis = centre.y + windowHeightScaled / 2 - imageHeightScaled;
     } else {
+      
+      console.log('b22222222')
       yAxis = centre.y - windowHeightScaled / 2;
     }
 
+    
+    console.log('imageHeightScaled',imageHeightScaled)
     const sidebar = document.getElementById("sidebar");
     const sidebarCollapsed = sidebar.classList.contains("collapsed"); // take into account if sidebar is collapsed
 
@@ -338,6 +357,7 @@ class ImageHoverHUD extends BasePlaceableHUD {
           sidebarWidthScaled;
       }
     } else {
+      console.log('elseeee')
       xAxis = centre.x - windowWidthScaled / 2;
     }
     return [xAxis, yAxis, imageWidthScaled];
@@ -513,6 +533,7 @@ Hooks.on('refreshToken', (token)=>{
   console.log('test refresh hover')
   canvas.hud.imageHover.showToAllCustom(token);
 });
+
 
 /**
  * Display image when user hovers mouse over a actor
