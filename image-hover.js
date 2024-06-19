@@ -12,7 +12,12 @@ let imageHoverDelay = 0; // Hover time requirement (milliseconds)
 let DEFAULT_TOKEN = "icons/svg/mystery-man.svg"; // default token for foundry vtt
 let showSpecificArt = false; // track when to show/hide art when GM uses keybind to show art.
 let showArtTimer = 6000; // Time (milliseconds) spent showing art when GM decides to "showSpecificArt" to everyone.
-
+let actorImages = {
+  image1:"pasted_images/pasted_image_1676355142831-black.png",
+  image2:"pasted_images/img300-black.jpg",
+  image3:"pasted_images/pasted_image_1676355142831-black.png",
+  image4:"pasted_images/pasted_image_1676355142831-black.png"
+}
 let chatPortraitActive = false; // chat portrait incompatibility check
 
 /**
@@ -102,18 +107,29 @@ class ImageHoverHUD extends BasePlaceableHUD {
       image = specificArtSelected;
     }
 
+    console.log('Token',tokenObject)
+    console.log('Actor Id',tokenObject.document.actorId)
+    const actorId = tokenObject.document.actorId;
     let borderColor = Color.from(tokenObject.document.getFlag('discord-speaking-status', 'BorderColor'))
     if (!borderColor || isNaN(borderColor)) {
-        image="pasted_images/pasted_image_1676355142831-black.png";
+      if(actorId=='gfHJopk6ZVSUfKJr')
+        actorImages.image1="pasted_images/pasted_image_1676355142831-black.png"
+      if(actorId=='4KLVoH44BSr1FyYu')
+        actorImages.image2="pasted_images/img300-black.jpg"
     }else{
-        image="pasted_images/pasted_image_1676355142831.png"
+      if(actorId=='gfHJopk6ZVSUfKJr')
+        actorImages.image1="pasted_images/pasted_image_1676355142831.png"
+      if(actorId=='4KLVoH44BSr1FyYu')
+        actorImages.image2="pasted_images/img300.jpg"
     }
     
 
 
-    data.url = image;
+    data.url = actorImages.image1;
+    data.url2 = actorImages.image2;
     const fileExt = this.fileExtention(image);
     if (videoFileExtentions.includes(fileExt)) data.isVideo = true; // if the file is not a image, we want to use the video html tag
+    console.log('data',data)
     return data;
   }
 
@@ -142,6 +158,7 @@ class ImageHoverHUD extends BasePlaceableHUD {
    * While hovering over a token and zooming or moving screen position, we want to reposition the image and scale it.
    */
   updatePosition() {
+    console.log('updatePosition')
     let url = this.object.actor.img; // Character art
     const isWildcard = this.object.actor.prototypeToken.randomImg;
     const isLinkedActor = this.object.document.actorLink;
@@ -183,6 +200,7 @@ class ImageHoverHUD extends BasePlaceableHUD {
    * @return {Promise} Promise which returns the dimensions of the image/video in 'width' and 'height' properties.
    */
   loadSourceDimensions(url) {
+    console.log('loadSourceDimensions')
     return new Promise((resolve) => {
       const fileExt = this.fileExtention(url);
 
@@ -428,7 +446,7 @@ class ImageHoverHUD extends BasePlaceableHUD {
 
   showToAllCustom(token) {
 
-      if (token && imageHoverActive) {
+  
           let borderColor = Color.from(token.document.getFlag('discord-speaking-status', 'BorderColor'))
           console.log('borderColor',borderColor)
           if (!borderColor || isNaN(borderColor)) {
@@ -445,7 +463,7 @@ class ImageHoverHUD extends BasePlaceableHUD {
           //     canvas.hud.imageHover.clear();
           // }, 100);                                           //after set amount of time, clear image
       }
-  }
+  
 }
 
 /**
@@ -456,7 +474,8 @@ Hooks.on("renderHeadsUpDisplay", (app, html, data) => {
   html[0].style.zIndex = 70;
   html.append(`<template id="image-hover-hud"></template>`);
   canvas.hud.imageHover = new ImageHoverHUD();
-
+  
+  canvas.hud.imageHover.showToAllCustom(canvas.tokens.placeables[0]);
   /**
    * renderHeadsUpDisplay is called when changing scene, use this to cache token images on the scene.
    */
