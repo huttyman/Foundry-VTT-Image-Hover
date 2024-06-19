@@ -102,6 +102,15 @@ class ImageHoverHUD extends BasePlaceableHUD {
       image = specificArtSelected;
     }
 
+    let borderColor = Color.from(tokenObject.document.getFlag('discord-speaking-status', 'BorderColor'))
+    if (!borderColor || isNaN(borderColor)) {
+        image="pasted_images/pasted_image_1676355142831-black.png";
+    }else{
+        image="pasted_images/pasted_image_1676355142831.png"
+    }
+    
+
+
     data.url = image;
     const fileExt = this.fileExtention(image);
     if (videoFileExtentions.includes(fileExt)) data.isVideo = true; // if the file is not a image, we want to use the video html tag
@@ -423,9 +432,9 @@ class ImageHoverHUD extends BasePlaceableHUD {
           let borderColor = Color.from(token.document.getFlag('discord-speaking-status', 'BorderColor'))
           console.log('borderColor',borderColor)
           if (!borderColor || isNaN(borderColor)) {
-              showSpecificArt = false;
-              canvas.hud.imageHover.clear();
-              return
+              // showSpecificArt = false;
+              // canvas.hud.imageHover.clear();
+              // return
           }
           console.log('continue show')
           showSpecificArt = true;                                     // condition to keep art on screen
