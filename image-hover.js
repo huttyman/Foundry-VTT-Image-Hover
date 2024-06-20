@@ -125,20 +125,20 @@ class ImageHoverHUD extends BasePlaceableHUD {
     let borderColor = Color.from(tokenObject.document.getFlag('discord-speaking-status', 'BorderColor'))
     if (!borderColor || isNaN(borderColor)) {
       if(actorId=='gfHJopk6ZVSUfKJr'){
-        actorImages.image1="pasted_images/pasted_image_1677547414277.png"
+        actorImages.image1=tokenObject.actor.img
         actorActives.isActive1 = false
       }
       if(actorId=='4KLVoH44BSr1FyYu'){
-        actorImages.image2=""
+        actorImages.image2=tokenObject.actor.img
         actorActives.isActive2 = false
       }
     }else{
       if(actorId=='gfHJopk6ZVSUfKJr'){
-        actorImages.image1="pasted_images/pasted_image_1677547414277.png"
+        actorImages.image1=tokenObject.actor.img
         actorActives.isActive1 = true
       }
       if(actorId=='4KLVoH44BSr1FyYu'){
-        actorImages.image2="pasted_images/img300.jpg"
+        actorImages.image2=tokenObject.actor.img
         actorActives.isActive2 = true
       }
     }
