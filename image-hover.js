@@ -22,7 +22,13 @@ let actorImages = {
   image1:"",
   image2:"",
   image3:"",
-  image4:""
+  image4:"",
+}
+let actorActives = {
+  isActive1: false,
+  isActive2: false,
+  isActive3: false,
+  isActive4: false,
 }
 let chatPortraitActive = false; // chat portrait incompatibility check
 
@@ -118,21 +124,32 @@ class ImageHoverHUD extends BasePlaceableHUD {
     const actorId = tokenObject.document.actorId;
     let borderColor = Color.from(tokenObject.document.getFlag('discord-speaking-status', 'BorderColor'))
     if (!borderColor || isNaN(borderColor)) {
-      if(actorId=='gfHJopk6ZVSUfKJr')
-        actorImages.image1=""
-      if(actorId=='4KLVoH44BSr1FyYu')
+      if(actorId=='gfHJopk6ZVSUfKJr'){
+        actorImages.image1="pasted_images/pasted_image_1677547414277.png"
+        actorActives.isActive1 = false
+      }
+      if(actorId=='4KLVoH44BSr1FyYu'){
         actorImages.image2=""
+        actorActives.isActive2 = false
+      }
     }else{
-      if(actorId=='gfHJopk6ZVSUfKJr')
-        actorImages.image1="pasted_images/pasted_image_1676355142831.png"
-      if(actorId=='4KLVoH44BSr1FyYu')
+      if(actorId=='gfHJopk6ZVSUfKJr'){
+        actorImages.image1="pasted_images/pasted_image_1677547414277.png"
+        actorActives.isActive1 = true
+      }
+      if(actorId=='4KLVoH44BSr1FyYu'){
         actorImages.image2="pasted_images/img300.jpg"
+        actorActives.isActive2 = true
+      }
     }
     
 
 
     data.url = actorImages.image1;
     data.url2 = actorImages.image2;
+    data.isActive = actorActives.isActive1;
+    data.isActive2 = actorActives.isActive2;
+
     const fileExt = this.fileExtention(image);
     if (videoFileExtentions.includes(fileExt)) data.isVideo = true; // if the file is not a image, we want to use the video html tag
     console.log('data',data)

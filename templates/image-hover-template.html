@@ -2,12 +2,17 @@
 	{{#if isVideo}}
 		<video src="{{url}}" autoplay loop style="width:100%; border:0px"></video>
 	{{else}}
-		<img src="{{url}}" id="hoverImageId" style="width:100%; border:0px"></img>
+	<div style="overflow: hidden; height: 500px; display: flex; justify-content: center; align-items: flex-end;">
+		{{#if isActive}}
+			<img src="{{url}}" id="hoverImageId" style="width:100%; border:0px"></img>
+		{{else}}
+			<img src="{{url}}" id="hoverImageId" style=" position:relative ;width:100%;border:0px;padding-top: 200px; opacity: 0.5;filter: brightness(0.5); /*bottom: -30%;*/">
+		{{/if}}
+	</div>
+		<img src="{{url2}}" id="hoverImageId2" style="width:100px; border:0px"></img>
 		
-		<img src="{{url2}}" id="hoverImageId2" style="width:100%; border:0px"></img>
+		<img src="{{url3}}" id="hoverImageId3" style="width:100px; border:0px"></img>
 		
-		<img src="{{url3}}" id="hoverImageId3" style="width:100%; border:0px"></img>
-		
-		<img src="{{url4}}" id="hoverImageId4" style="width:100%; border:0px"></img>
+		<img src="{{url4}}" id="hoverImageId4" style="width:100px; border:0px"></img>
 	{{/if}}
 </div>
