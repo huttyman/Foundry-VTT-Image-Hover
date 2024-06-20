@@ -119,8 +119,6 @@ class ImageHoverHUD extends BasePlaceableHUD {
       image = specificArtSelected;
     }
 
-    console.log('Token',tokenObject)
-    console.log('Actor Id',tokenObject.document.actorId)
     const actorId = tokenObject.document.actorId;
     let borderColor = Color.from(tokenObject.document.getFlag('discord-speaking-status', 'BorderColor'))
     if (!borderColor || isNaN(borderColor)) {
@@ -152,7 +150,6 @@ class ImageHoverHUD extends BasePlaceableHUD {
 
     const fileExt = this.fileExtention(image);
     if (videoFileExtentions.includes(fileExt)) data.isVideo = true; // if the file is not a image, we want to use the video html tag
-    console.log('data',data)
     return data;
   }
 
@@ -286,8 +283,6 @@ class ImageHoverHUD extends BasePlaceableHUD {
       imageWidth,
       imageHeight
     ); // move image to correct verticle position.
-    console.log('xAxis',xAxis)
-    console.log('yAxis',yAxis)
     const position = {
       // CSS
       width: imageWidthScaled,
@@ -315,24 +310,18 @@ class ImageHoverHUD extends BasePlaceableHUD {
 
     if (imageHeightScaled > windowHeightScaled) {
       // Height of image bigger than window height
-      console.log('aaaaaaaaa')
       imageWidthScaled =
         (windowHeightScaled / imageHeightScaled) * imageWidthScaled;
       imageHeightScaled = windowHeightScaled;
     }
 
     if (imagePositionSetting.includes("Bottom")) {
-      console.log('b11111111')
       // move image to bottom of canvas
       yAxis = centre.y + windowHeightScaled / 2 - imageHeightScaled;
     } else {
-      
-      console.log('b22222222')
       yAxis = centre.y - windowHeightScaled / 2;
     }
 
-    
-    console.log('imageHeightScaled',imageHeightScaled)
     const sidebar = document.getElementById("sidebar");
     const sidebarCollapsed = sidebar.classList.contains("collapsed"); // take into account if sidebar is collapsed
 
@@ -374,7 +363,6 @@ class ImageHoverHUD extends BasePlaceableHUD {
           sidebarWidthScaled;
       }
     } else {
-      console.log('elseeee')
       xAxis = centre.x - windowWidthScaled / 2;
     }
     return [xAxis, yAxis, imageWidthScaled];
@@ -483,15 +471,6 @@ class ImageHoverHUD extends BasePlaceableHUD {
 
   showToAllCustom(token) {
 
-  
-          let borderColor = Color.from(token.document.getFlag('discord-speaking-status', 'BorderColor'))
-          console.log('borderColor',borderColor)
-          if (!borderColor || isNaN(borderColor)) {
-              // showSpecificArt = false;
-              // canvas.hud.imageHover.clear();
-              // return
-          }
-          console.log('continue show')
           showSpecificArt = true;                                     // condition to keep art on screen
           canvas.hud.imageHover.bind(token);
           // clearTimeout(timer);                                        //reset timer if key is pressed again
@@ -507,7 +486,6 @@ class ImageHoverHUD extends BasePlaceableHUD {
  * Add Image Hover display to html on load.
  */
 Hooks.on("renderHeadsUpDisplay", (app, html, data) => {
-  console.log('renderHeadsUpDisplay')
   html[0].style.zIndex = 70;
   html.append(`<template id="image-hover-hud"></template>`);
   canvas.hud.imageHover = new ImageHoverHUD();
@@ -547,7 +525,6 @@ Hooks.on("createToken", (token, options, userId) => {
 });
 
 Hooks.on('refreshToken', (token)=>{
-  console.log('test refresh hover')
   canvas.hud.imageHover.showToAllCustom(token);
 });
 
