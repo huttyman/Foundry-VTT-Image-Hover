@@ -6,7 +6,7 @@ import { Settings } from "./settings.js";
 let actorRequirementSetting = "None"; // required actor permission to see character art
 let imageHoverActive = true; // Enable/Disable module
 let imagePositionSetting = "Bottom left"; // location of character art
-let imageSizeSetting = 7; // size of character art
+let imageSizeSetting = 8; // size of character art
 let imageHoverArt = "character"; // Art type on hover (Character art or Token art)
 let imageHoverDelay = 0; // Hover time requirement (milliseconds)
 let DEFAULT_TOKEN = "icons/svg/mystery-man.svg"; // default token for foundry vtt
@@ -220,7 +220,6 @@ class ImageHoverHUD extends BasePlaceableHUD {
    * While hovering over a token and zooming or moving screen position, we want to reposition the image and scale it.
    */
   updatePosition() {
-    console.log('updatePosition')
     let url = this.object.actor.img; // Character art
     const isWildcard = this.object.actor.prototypeToken.randomImg;
     const isLinkedActor = this.object.document.actorLink;
@@ -320,7 +319,12 @@ class ImageHoverHUD extends BasePlaceableHUD {
     // const imageHeight = cacheImageNames[url].height; //height of original image
     
     const imageWidth = 1500; //width of original image
-    const imageHeight = 2400; //height of original image
+    let imageHeight = 2400; //height of original image
+    if(ui.ARGON.enabled)
+      imageHeight = 800 + (imageSizeSetting*200); //2400:7   2600:9 2800:10  3000:11
+    else
+      imageHeight = 1500;
+
     const [xAxis, yAxis, imageWidthScaled] = this.changePosition(
       imageWidth,
       imageHeight

@@ -168,7 +168,7 @@ export class Settings {
         max: 20,
         step: 0.5,
       },
-      default: 7, // Default Value
+      default: 8, // Default Value
       type: Number, // Value type
     });
 
