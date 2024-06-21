@@ -67,7 +67,7 @@ function registerModuleSettings() {
   actorTokenId2 = game.settings.get("image-hover", "actorTokenId2");
   actorTokenId3 = game.settings.get("image-hover", "actorTokenId3");
   actorTokenId4 = game.settings.get("image-hover", "actorTokenId4");
-  actorTokenId4 = game.settings.get("image-hover", "actorTokenId5");
+  actorTokenId5 = game.settings.get("image-hover", "actorTokenId5");
 }
 
 /**
