@@ -6,7 +6,7 @@ import { Settings } from "./settings.js";
 let actorRequirementSetting = "None"; // required actor permission to see character art
 let imageHoverActive = true; // Enable/Disable module
 let imagePositionSetting = "Bottom left"; // location of character art
-let imageSizeSetting = 10; // size of character art
+let imageSizeSetting = 7; // size of character art
 let imageHoverArt = "character"; // Art type on hover (Character art or Token art)
 let imageHoverDelay = 0; // Hover time requirement (milliseconds)
 let DEFAULT_TOKEN = "icons/svg/mystery-man.svg"; // default token for foundry vtt
@@ -320,7 +320,7 @@ class ImageHoverHUD extends BasePlaceableHUD {
     // const imageHeight = cacheImageNames[url].height; //height of original image
     
     const imageWidth = 1500; //width of original image
-    const imageHeight = 1500; //height of original image
+    const imageHeight = 2400; //height of original image
     const [xAxis, yAxis, imageWidthScaled] = this.changePosition(
       imageWidth,
       imageHeight
@@ -343,7 +343,6 @@ class ImageHoverHUD extends BasePlaceableHUD {
    */
   changePosition(imageWidth, imageHeight) {
     const centre = canvas.scene._viewPosition; // Middle of the screen
-    imageSizeSetting = 3
     let imageWidthScaled =
     window.innerWidth / (imageSizeSetting * centre.scale); // Scaled width of image to canvas
     let imageHeightScaled = imageWidthScaled * (imageHeight / imageWidth); // Scaled height from width
