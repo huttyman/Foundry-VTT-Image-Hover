@@ -189,6 +189,7 @@ class ImageHoverHUD extends BasePlaceableHUD {
     data.isActive3 = actorActives.isActive3;
     data.isActive4 = actorActives.isActive4;
     data.isActive5 = actorActives.isActive5;
+    data.isNotArgon = !ui.ARGON.enabled;
 
     const fileExt = this.fileExtention(image);
     if (videoFileExtentions.includes(fileExt)) data.isVideo = true; // if the file is not a image, we want to use the video html tag
@@ -323,7 +324,7 @@ class ImageHoverHUD extends BasePlaceableHUD {
     if(ui.ARGON.enabled)
       imageHeight = 800 + (imageSizeSetting*200); //2400:7   2600:9 2800:10  3000:11
     else
-      imageHeight = 1500;
+      imageHeight = 1100;
 
     const [xAxis, yAxis, imageWidthScaled] = this.changePosition(
       imageWidth,
