@@ -18,6 +18,12 @@ let showArtTimer = 6000; // Time (milliseconds) spent showing art when GM decide
 //   image3:"pasted_images/pasted_image_1676355142831-black.png",
 //   image4:"pasted_images/pasted_image_1676355142831-black.png"
 // }
+let actorTokenId1 = "";
+let actorTokenId2 = "";
+let actorTokenId3 = "";
+let actorTokenId4 = "";
+let actorTokenId5 = "";
+
 let actorImages = {
   image1:"",
   image2:"",
@@ -56,6 +62,12 @@ function registerModuleSettings() {
   imageHoverDelay = game.settings.get("image-hover", "userHoverDelay");
   showArtTimer = game.settings.get("image-hover", "showArtTimer");
   chatPortraitActive = game.modules.get("chat-portrait")?.active; // Undefined if module not installed)
+  
+  actorTokenId1 = game.settings.get("image-hover", "actorTokenId1");
+  actorTokenId2 = game.settings.get("image-hover", "actorTokenId2");
+  actorTokenId3 = game.settings.get("image-hover", "actorTokenId3");
+  actorTokenId4 = game.settings.get("image-hover", "actorTokenId4");
+  actorTokenId4 = game.settings.get("image-hover", "actorTokenId5");
 }
 
 /**
@@ -122,22 +134,46 @@ class ImageHoverHUD extends BasePlaceableHUD {
     const actorId = tokenObject.document.actorId;
     let borderColor = Color.from(tokenObject.document.getFlag('discord-speaking-status', 'BorderColor'))
     if (!borderColor || isNaN(borderColor)) {
-      if(actorId=='gfHJopk6ZVSUfKJr'){
+      if(actorId==actorTokenId1){
         actorImages.image1=tokenObject.actor.img
         actorActives.isActive1 = false
       }
-      if(actorId=='4KLVoH44BSr1FyYu'){
+      if(actorId==actorTokenId2){
         actorImages.image2=tokenObject.actor.img
         actorActives.isActive2 = false
       }
+      if(actorId==actorTokenId3){
+        actorImages.image3=tokenObject.actor.img
+        actorActives.isActive3 = false
+      }
+      if(actorId==actorTokenId4){
+        actorImages.image4=tokenObject.actor.img
+        actorActives.isActive4 = false
+      }
+      if(actorId==actorTokenId5){
+        actorImages.image5=tokenObject.actor.img
+        actorActives.isActive5 = false
+      }
     }else{
-      if(actorId=='gfHJopk6ZVSUfKJr'){
+      if(actorId==actorTokenId1){
         actorImages.image1=tokenObject.actor.img
         actorActives.isActive1 = true
       }
-      if(actorId=='4KLVoH44BSr1FyYu'){
+      if(actorId==actorTokenId2){
         actorImages.image2=tokenObject.actor.img
         actorActives.isActive2 = true
+      }
+      if(actorId==actorTokenId3){
+        actorImages.image3=tokenObject.actor.img
+        actorActives.isActive3 = true
+      }
+      if(actorId==actorTokenId4){
+        actorImages.image4=tokenObject.actor.img
+        actorActives.isActive4 = true
+      }
+      if(actorId==actorTokenId5){
+        actorImages.image5=tokenObject.actor.img
+        actorActives.isActive5 = true
       }
     }
     
@@ -145,8 +181,14 @@ class ImageHoverHUD extends BasePlaceableHUD {
 
     data.url = actorImages.image1;
     data.url2 = actorImages.image2;
+    data.url3 = actorImages.image3;
+    data.url4 = actorImages.image4;
+    data.url5 = actorImages.image5;
     data.isActive = actorActives.isActive1;
     data.isActive2 = actorActives.isActive2;
+    data.isActive3 = actorActives.isActive3;
+    data.isActive4 = actorActives.isActive4;
+    data.isActive5 = actorActives.isActive5;
 
     const fileExt = this.fileExtention(image);
     if (videoFileExtentions.includes(fileExt)) data.isVideo = true; // if the file is not a image, we want to use the video html tag
