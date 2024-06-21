@@ -81,7 +81,7 @@ class ImageHoverHUD extends BasePlaceableHUD {
       id: "image-hover-hud",
       classes: [...super.defaultOptions.classes, "image-hover-hud"],
       minimizable: false,
-      resizable: true,
+      resizable: false,
       template: "modules/image-hover/templates/image-hover-template.html", // HTML template
     });
   }
