@@ -286,6 +286,7 @@ class ImageHoverHUD extends BasePlaceableHUD {
     const position = {
       // CSS
       width: imageWidthScaled,
+      height: imageWidthScaled/2,
       left: xAxis,
       top: yAxis,
     };
