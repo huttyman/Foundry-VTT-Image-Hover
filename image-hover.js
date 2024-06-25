@@ -29,12 +29,16 @@ let actorImages = {
   image2:"",
   image3:"",
   image4:"",
+  image5:"",
+  imageGM:""
 }
 let actorActives = {
   isActive1: false,
   isActive2: false,
   isActive3: false,
   isActive4: false,
+  isActive5: false,
+  isActiveGM: false
 }
 let chatPortraitActive = false; // chat portrait incompatibility check
 
@@ -138,43 +142,51 @@ class ImageHoverHUD extends BasePlaceableHUD {
         actorImages.image1=tokenObject.actor.img
         actorActives.isActive1 = false
       }
-      if(actorId==actorTokenId2){
+      else if(actorId==actorTokenId2){
         actorImages.image2=tokenObject.actor.img
         actorActives.isActive2 = false
       }
-      if(actorId==actorTokenId3){
+      else if(actorId==actorTokenId3){
         actorImages.image3=tokenObject.actor.img
         actorActives.isActive3 = false
       }
-      if(actorId==actorTokenId4){
+      else if(actorId==actorTokenId4){
         actorImages.image4=tokenObject.actor.img
         actorActives.isActive4 = false
       }
-      if(actorId==actorTokenId5){
+      else if(actorId==actorTokenId5){
         actorImages.image5=tokenObject.actor.img
         actorActives.isActive5 = false
+      }else{
+        actorImages.imageGM=tokenObject.actor.img
+        actorActives.isActiveGM = false
       }
     }else{
       if(actorId==actorTokenId1){
         actorImages.image1=tokenObject.actor.img
         actorActives.isActive1 = true
       }
-      if(actorId==actorTokenId2){
+      else if(actorId==actorTokenId2){
         actorImages.image2=tokenObject.actor.img
         actorActives.isActive2 = true
       }
-      if(actorId==actorTokenId3){
+      else if(actorId==actorTokenId3){
         actorImages.image3=tokenObject.actor.img
         actorActives.isActive3 = true
       }
-      if(actorId==actorTokenId4){
+      else if(actorId==actorTokenId4){
         actorImages.image4=tokenObject.actor.img
         actorActives.isActive4 = true
       }
-      if(actorId==actorTokenId5){
+      else if(actorId==actorTokenId5){
         actorImages.image5=tokenObject.actor.img
         actorActives.isActive5 = true
       }
+      else{
+        actorImages.imageGM=tokenObject.actor.img
+        actorActives.isActiveGM = true
+      }
+      
     }
     
 
@@ -184,11 +196,13 @@ class ImageHoverHUD extends BasePlaceableHUD {
     data.url3 = actorImages.image3;
     data.url4 = actorImages.image4;
     data.url5 = actorImages.image5;
+    data.urlGM = actorImages.imageGM;
     data.isActive = actorActives.isActive1;
     data.isActive2 = actorActives.isActive2;
     data.isActive3 = actorActives.isActive3;
     data.isActive4 = actorActives.isActive4;
     data.isActive5 = actorActives.isActive5;
+    data.isActiveGM = actorActives.isActiveGM;
     data.isNotArgon = !ui.ARGON.enabled;
 
     const fileExt = this.fileExtention(image);

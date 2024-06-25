@@ -32,5 +32,10 @@
 	{{else}}
 		<img src="{{url5}}" id="hoverImageId" style=" position:relative ;width:50%;border:0px;opacity: 0.7;filter: brightness(0.7); /*bottom: -30%;*/">
 	{{/if}}
-
+	<img src="{{url}}" id="hoverImageId" style=" position:relative ;width:50%;border:0px;opacity: 0.0;filter: brightness(0.7); /*bottom: -30%;*/">
+	
+	{{#if isActiveGM}}
+	<img src="{{urlGM}}" id="hoverImageId" style="width:50%; border:0px"></img>
+	{{/if}}
+	
 </div>
