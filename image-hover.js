@@ -6,13 +6,36 @@ import { Settings } from "./settings.js";
 let actorRequirementSetting = "None"; // required actor permission to see character art
 let imageHoverActive = true; // Enable/Disable module
 let imagePositionSetting = "Bottom left"; // location of character art
-let imageSizeSetting = 7; // size of character art
+let imageSizeSetting = 8; // size of character art
 let imageHoverArt = "character"; // Art type on hover (Character art or Token art)
 let imageHoverDelay = 0; // Hover time requirement (milliseconds)
 let DEFAULT_TOKEN = "icons/svg/mystery-man.svg"; // default token for foundry vtt
 let showSpecificArt = false; // track when to show/hide art when GM uses keybind to show art.
 let showArtTimer = 6000; // Time (milliseconds) spent showing art when GM decides to "showSpecificArt" to everyone.
+// let actorImages = {
+//   image1:"pasted_images/pasted_image_1676355142831-black.png",
+//   image2:"pasted_images/img300-black.jpg",
+//   image3:"pasted_images/pasted_image_1676355142831-black.png",
+//   image4:"pasted_images/pasted_image_1676355142831-black.png"
+// }
+let actorTokenId1 = "";
+let actorTokenId2 = "";
+let actorTokenId3 = "";
+let actorTokenId4 = "";
+let actorTokenId5 = "";
 
+let actorImages = {
+  image1:"",
+  image2:"",
+  image3:"",
+  image4:"",
+}
+let actorActives = {
+  isActive1: false,
+  isActive2: false,
+  isActive3: false,
+  isActive4: false,
+}
 let chatPortraitActive = false; // chat portrait incompatibility check
 
 /**
@@ -39,6 +62,12 @@ function registerModuleSettings() {
   imageHoverDelay = game.settings.get("image-hover", "userHoverDelay");
   showArtTimer = game.settings.get("image-hover", "showArtTimer");
   chatPortraitActive = game.modules.get("chat-portrait")?.active; // Undefined if module not installed)
+  
+  actorTokenId1 = game.settings.get("image-hover", "actorTokenId1");
+  actorTokenId2 = game.settings.get("image-hover", "actorTokenId2");
+  actorTokenId3 = game.settings.get("image-hover", "actorTokenId3");
+  actorTokenId4 = game.settings.get("image-hover", "actorTokenId4");
+  actorTokenId5 = game.settings.get("image-hover", "actorTokenId5");
 }
 
 /**
@@ -64,7 +93,7 @@ class ImageHoverHUD extends BasePlaceableHUD {
       id: "image-hover-hud",
       classes: [...super.defaultOptions.classes, "image-hover-hud"],
       minimizable: false,
-      resizable: true,
+      resizable: false,
       template: "modules/image-hover/templates/image-hover-template.html", // HTML template
     });
   }
@@ -102,7 +131,66 @@ class ImageHoverHUD extends BasePlaceableHUD {
       image = specificArtSelected;
     }
 
-    data.url = image;
+    const actorId = tokenObject.document.actorId;
+    let borderColor = Color.from(tokenObject.document.getFlag('discord-speaking-status', 'BorderColor'))
+    if (!borderColor || isNaN(borderColor)) {
+      if(actorId==actorTokenId1){
+        actorImages.image1=tokenObject.actor.img
+        actorActives.isActive1 = false
+      }
+      if(actorId==actorTokenId2){
+        actorImages.image2=tokenObject.actor.img
+        actorActives.isActive2 = false
+      }
+      if(actorId==actorTokenId3){
+        actorImages.image3=tokenObject.actor.img
+        actorActives.isActive3 = false
+      }
+      if(actorId==actorTokenId4){
+        actorImages.image4=tokenObject.actor.img
+        actorActives.isActive4 = false
+      }
+      if(actorId==actorTokenId5){
+        actorImages.image5=tokenObject.actor.img
+        actorActives.isActive5 = false
+      }
+    }else{
+      if(actorId==actorTokenId1){
+        actorImages.image1=tokenObject.actor.img
+        actorActives.isActive1 = true
+      }
+      if(actorId==actorTokenId2){
+        actorImages.image2=tokenObject.actor.img
+        actorActives.isActive2 = true
+      }
+      if(actorId==actorTokenId3){
+        actorImages.image3=tokenObject.actor.img
+        actorActives.isActive3 = true
+      }
+      if(actorId==actorTokenId4){
+        actorImages.image4=tokenObject.actor.img
+        actorActives.isActive4 = true
+      }
+      if(actorId==actorTokenId5){
+        actorImages.image5=tokenObject.actor.img
+        actorActives.isActive5 = true
+      }
+    }
+    
+
+
+    data.url = actorImages.image1;
+    data.url2 = actorImages.image2;
+    data.url3 = actorImages.image3;
+    data.url4 = actorImages.image4;
+    data.url5 = actorImages.image5;
+    data.isActive = actorActives.isActive1;
+    data.isActive2 = actorActives.isActive2;
+    data.isActive3 = actorActives.isActive3;
+    data.isActive4 = actorActives.isActive4;
+    data.isActive5 = actorActives.isActive5;
+    data.isNotArgon = !ui.ARGON.enabled;
+
     const fileExt = this.fileExtention(image);
     if (videoFileExtentions.includes(fileExt)) data.isVideo = true; // if the file is not a image, we want to use the video html tag
     return data;
@@ -142,11 +230,12 @@ class ImageHoverHUD extends BasePlaceableHUD {
       (imageHoverArt === "wildcard" && isWildcard) ||
       (imageHoverArt == "linked" && !isLinkedActor)
     ) {
+      console.log('no Art ddddd')
       // If no character art exists, use token art instead.
-      if (this.object.document.texture.src == DEFAULT_TOKEN) {
-        return;
-      }
-      url = this.object.document.texture.src; // Token art
+      // if (this.object.document.texture.src == DEFAULT_TOKEN) {
+      //   return;
+      // }
+      // url = this.object.document.texture.src; // Token art
     }
 
     /**
@@ -157,9 +246,10 @@ class ImageHoverHUD extends BasePlaceableHUD {
       "specificArt"
     );
     if (specificArtSelected && specificArtSelected != "path/image.png") {
+      
       url = specificArtSelected;
     }
-
+    
     if (url in cacheImageNames) {
       this.applyToCanvas(url);
     } else {
@@ -174,6 +264,7 @@ class ImageHoverHUD extends BasePlaceableHUD {
    * @return {Promise} Promise which returns the dimensions of the image/video in 'width' and 'height' properties.
    */
   loadSourceDimensions(url) {
+    console.log('loadSourceDimensions')
     return new Promise((resolve) => {
       const fileExt = this.fileExtention(url);
 
@@ -225,8 +316,16 @@ class ImageHoverHUD extends BasePlaceableHUD {
    * @param {String} url Url of the image/video to get dimensions from.
    */
   applyToCanvas(url) {
-    const imageWidth = cacheImageNames[url].width; //width of original image
-    const imageHeight = cacheImageNames[url].height; //height of original image
+    // const imageWidth = cacheImageNames[url].width; //width of original image
+    // const imageHeight = cacheImageNames[url].height; //height of original image
+    
+    const imageWidth = 1500; //width of original image
+    let imageHeight = 2400; //height of original image
+    if(ui.ARGON.enabled)
+      imageHeight = 800 + (imageSizeSetting*200); //2400:7   2600:9 2800:10  3000:11
+    else
+      imageHeight = 1100;
+
     const [xAxis, yAxis, imageWidthScaled] = this.changePosition(
       imageWidth,
       imageHeight
@@ -234,6 +333,7 @@ class ImageHoverHUD extends BasePlaceableHUD {
     const position = {
       // CSS
       width: imageWidthScaled,
+      height: imageWidthScaled/2,
       left: xAxis,
       top: yAxis,
     };
@@ -249,7 +349,7 @@ class ImageHoverHUD extends BasePlaceableHUD {
   changePosition(imageWidth, imageHeight) {
     const centre = canvas.scene._viewPosition; // Middle of the screen
     let imageWidthScaled =
-      window.innerWidth / (imageSizeSetting * centre.scale); // Scaled width of image to canvas
+    window.innerWidth / (imageSizeSetting * centre.scale); // Scaled width of image to canvas
     let imageHeightScaled = imageWidthScaled * (imageHeight / imageWidth); // Scaled height from width
     const windowWidthScaled = window.innerWidth / centre.scale;
     const windowHeightScaled = window.innerHeight / centre.scale;
@@ -419,15 +519,6 @@ class ImageHoverHUD extends BasePlaceableHUD {
 
   showToAllCustom(token) {
 
-      if (token && imageHoverActive) {
-          let borderColor = Color.from(token.document.getFlag('discord-speaking-status', 'BorderColor'))
-          console.log('borderColor',borderColor)
-          if (!borderColor || isNaN(borderColor)) {
-              showSpecificArt = false;
-              canvas.hud.imageHover.clear();
-              return
-          }
-          console.log('continue show')
           showSpecificArt = true;                                     // condition to keep art on screen
           canvas.hud.imageHover.bind(token);
           // clearTimeout(timer);                                        //reset timer if key is pressed again
@@ -436,18 +527,18 @@ class ImageHoverHUD extends BasePlaceableHUD {
           //     canvas.hud.imageHover.clear();
           // }, 100);                                           //after set amount of time, clear image
       }
-  }
+  
 }
 
 /**
  * Add Image Hover display to html on load.
  */
 Hooks.on("renderHeadsUpDisplay", (app, html, data) => {
-  console.log('renderHeadsUpDisplay')
   html[0].style.zIndex = 70;
   html.append(`<template id="image-hover-hud"></template>`);
   canvas.hud.imageHover = new ImageHoverHUD();
-
+  
+  canvas.hud.imageHover.showToAllCustom(canvas.tokens.placeables[0]);
   /**
    * renderHeadsUpDisplay is called when changing scene, use this to cache token images on the scene.
    */
@@ -482,9 +573,9 @@ Hooks.on("createToken", (token, options, userId) => {
 });
 
 Hooks.on('refreshToken', (token)=>{
-  console.log('test refresh hover')
   canvas.hud.imageHover.showToAllCustom(token);
 });
+
 
 /**
  * Display image when user hovers mouse over a actor

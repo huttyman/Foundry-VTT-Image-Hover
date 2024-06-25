@@ -36,6 +36,52 @@ export class Settings {
       type: String, // Value type
     });
 
+    game.settings.register('image-hover', 'actorTokenId1', {
+      name: `Actor1 TokenId`,
+      hint: `Actor1 Id`,
+      scope: "world",
+      config: true,
+      type: String,
+      default: "",
+      requiresReload: true
+    });
+    game.settings.register('image-hover', 'actorTokenId2', {
+      name: `Actor2 TokenId`,
+      hint: `Actor2 Id`,
+      scope: "world",
+      config: true,
+      type: String,
+      default: "",
+      requiresReload: true
+    });
+    game.settings.register('image-hover', 'actorTokenId3', {
+      name: `Actor3 TokenId`,
+      hint: `Actor3 Id`,
+      scope: "world",
+      config: true,
+      type: String,
+      default: "",
+      requiresReload: true
+    });
+    game.settings.register('image-hover', 'actorTokenId4', {
+      name: `Actor4 TokenId`,
+      hint: `Actor4 Id`,
+      scope: "world",
+      config: true,
+      type: String,
+      default: "",
+      requiresReload: true
+    });
+    game.settings.register('image-hover', 'actorTokenId5', {
+      name: `Actor4 TokenId`,
+      hint: `Actor4 Id`,
+      scope: "world",
+      config: true,
+      type: String,
+      default: "",
+      requiresReload: true
+    });
+
     // Game master setting
     game.keybindings.register("image-hover", "showAllKey", {
       name: "Assign a keybind to show all users art.", // Setting name
@@ -122,7 +168,7 @@ export class Settings {
         max: 20,
         step: 0.5,
       },
-      default: 7, // Default Value
+      default: 8, // Default Value
       type: Number, // Value type
     });
 
