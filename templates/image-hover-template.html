@@ -1,5 +1,8 @@
 <div id="{{id}}" class="{{classes}}" style="display: flex; overflow-y:clip;">
 
+	{{#if isNotArgon}}
+	<img src="{{url}}" id="hoverImageId" style=" position:relative ;width:30%;border:0px;opacity: 0.0;filter: brightness(0.7); /*bottom: -30%;*/">
+	{{/if}}
 	{{#if isActive}}
 		<img src="{{url}}" id="hoverImageId" style="width:50%; border:0px"></img>
 	{{/if}}
